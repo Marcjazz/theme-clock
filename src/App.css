@@ -2,19 +2,44 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
+.theme-clock {
   pointer-events: none;
+  padding-left: 10%;
+  border: 3px solid black;
+  border-radius: 320px;
+  height: 350px;
+  width: 220px;
+  position: relative;
+  margin-bottom: -60px;
+  background:url("logo.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+.needle{
+  position: relative;
+  background-color: black;
+  transform-origin: 0px 0px;
+  transition-duration: 1s;
+}
+.mode{
+  position: relative;
+  margin:60px;
+  width: 150px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: black;
+  color:white;
+}
+button{
+  margin-bottom: 170px;
+  cursor: pointer;
+  z-index: 999;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.theme {
+  background-color: white;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -23,16 +48,64 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.circle{
+  border-radius: 10%;
+  width: fit-content;
+}
+.today{
+  opacity: 0.7;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 40px;
+  font-weight: 10px;
+  position: inherit;
+  margin-top: -20px;
+}
+.timeSet{
+  position: relative;
+  padding-top: 100px;
+  color: black;
+}
+.hour{
+  position: absolute;
+  left:41%;
+  top:50%;
+  width: 100px;
+  height: 3px;
+}
+.min{
+  position: absolute;
+  left:41%;
+  top:51%;;
+  width: 140px;
+  height: 3px;
+}
+.sec{
+  position: absolute;
+  left:40%;
+  top:50%;
+  width: 155px;
+  height: 3px;
+  background-color : red;
+}
+.needle_holder{
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  left:48%;
+  top:49%;
+  border-radius: 100%;
+  background-color: blue;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (min-width : 500px) {
+  .needle{
+    margin-left:65px;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+
+@media (min-width : 1000px) {
+  .needle{
+    margin-left:35px;
   }
 }
