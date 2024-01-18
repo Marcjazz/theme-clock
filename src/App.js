@@ -123,8 +123,8 @@ function App() {
             className='today'
             style={{ color: isDarkMode ? 'black' : 'white', transition: '2s' }}
           >
-            {clockState.date.day}, {clockState.date.month}{' '}
-            <span className='circle'>{clockState.date.date}</span>
+            {clockState.date.day}, {clockState.date.month}
+            <span>{clockState.date.date}</span>
           </p>
         </div>
       </div>
