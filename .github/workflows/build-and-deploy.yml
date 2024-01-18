@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
 permissions:
   contents: write
 jobs:
@@ -24,10 +21,11 @@ jobs:
           npm ci
           npm run build
 
-      - name: Test
+      - name: Test 🧪
         run: npm run test
-        
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: build # The folder the action should deploy.
+
