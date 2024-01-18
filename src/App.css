@@ -5,10 +5,10 @@
 .theme-clock {
   pointer-events: none;
   padding-left: 10%;
-  border: 3px solid black;
+  border: 2px solid black;
   border-radius: 320px;
   height: 350px;
-  width: 220px;
+  width: 350px;
   position: relative;
   margin-bottom: -60px;
   background:url("logo.svg");
@@ -67,21 +67,21 @@ button{
 }
 .hour{
   position: absolute;
-  left:41%;
+  left:50%;
   top:50%;
   width: 100px;
   height: 3px;
 }
 .min{
   position: absolute;
-  left:41%;
-  top:51%;;
+  left:50%;
+  top:50%;;
   width: 140px;
   height: 3px;
 }
 .sec{
   position: absolute;
-  left:40%;
+  left:50%;
   top:50%;
   width: 155px;
   height: 3px;
@@ -89,23 +89,10 @@ button{
 }
 .needle_holder{
   position: absolute;
-  width: 11px;
-  height: 11px;
+  width: 20px;
+  height: 20px;
   left:48%;
-  top:49%;
+  top:47%;
   border-radius: 100%;
-  background-color: blue;
-}
-
-@media (min-width : 500px) {
-  .needle{
-    margin-left:65px;
-  }
-}
-
-
-@media (min-width : 1000px) {
-  .needle{
-    margin-left:35px;
-  }
+  background-color: black;
 }

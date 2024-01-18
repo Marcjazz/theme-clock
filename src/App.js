@@ -1,141 +1,135 @@
-import { useEffect, useState } from 'react';
-import './App.css';
+import { useState } from 'react'
+import './App.css'
 
-function Horloge(props){
-  return(
-    <div className="theme-clock">
-      <div className="needle sec" style={props.sStyle}></div>
-      <div className="needle min" style={props.mStyle}></div>
-      <div className="needle hour" style={props.hStyle}></div>
+const WEEKDAYS = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+]
+const MONTHS = [
+  'January',
+  'Febuary',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
+function Horloge({ isDarkMode, clockStyle }) {
+  return (
+    <div
+      className='theme-clock'
+      style={{ borderColor: isDarkMode ? 'black' : 'white' }}
+    >
+      <div className='needle sec' style={clockStyle.secondsNeedle}></div>
+      <div
+        className='needle min'
+        style={{
+          ...clockStyle.minutesNeedle,
+          backgroundColor: isDarkMode ? 'black' : 'white',
+        }}
+      ></div>
+      <div
+        className='needle hour'
+        style={{
+          ...clockStyle.hoursNeedle,
+          backgroundColor: isDarkMode ? 'black' : 'white',
+        }}
+      ></div>
       <div className='needle_holder'></div>
     </div>
   )
 }
 
 function App() {
-  let myTime = new Date();
-  const days = ["Sunday", "Monday", "Tuesday", "wednesday", "Thursday", "Friday", "Saturday"];
-  const months = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-//initializing our state to dark
-  let [clockState, setClockState] = useState({
-    dark:false,
-    hoursForClock:myTime.getHours() % 12,
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [clockTime, setClockTime] = useState(new Date())
+
+  let clockState = {
+    dark: false,
+    hoursForClock: clockTime.getHours() % 12,
     date: {
-      month:months[myTime.getMonth()],
-      date:myTime.getDate(),
-      day:days[myTime.getDay()],
+      month: MONTHS[clockTime.getMonth()],
+      date: clockTime.getDate(),
+      day: WEEKDAYS[clockTime.getDay()],
     },
     time: {
-      hours:myTime.getHours(),
-      minutes:(myTime.getMinutes() < 10 ? '0'+myTime.getMinutes(): myTime.getMinutes()),
-      seconds:(myTime.getSeconds() < 10 ? '0'+myTime.getSeconds(): myTime.getSeconds()),
-      ampm:(myTime.getHours() >= 12 ? 'PM' : 'AM')
+      hours: clockTime.getHours(),
+      minutes:
+        clockTime.getMinutes() < 10
+          ? '0' + clockTime.getMinutes()
+          : clockTime.getMinutes(),
+      seconds:
+        clockTime.getSeconds() < 10
+          ? '0' + clockTime.getSeconds()
+          : clockTime.getSeconds(),
+      ampm: clockTime.getHours() >= 12 ? 'PM' : 'AM',
     },
-    clockStyle:{
-      h_style:{
-        transform:"rotate("+((myTime.getHours() % 12)*360/12 - 85)+"deg)"
+    clockStyle: {
+      hoursNeedle: {
+        transform:
+          'rotate(' + (((clockTime.getHours() % 12) * 360) / 12 - 85) + 'deg)',
       },
-      m_style:{
-        transform:"rotate("+(myTime.getMinutes()*360/60 -90)+"deg)"
+      minutesNeedle: {
+        transform:
+          'rotate(' + ((clockTime.getMinutes() * 360) / 60 - 90) + 'deg)',
       },
-      s_style:{
-        transform:"rotate("+(myTime.getSeconds()*360/60 -90)+"deg)"
-      }
-    }
-  });
-
-//this witches the page between light and dark mode
-  let changeModeHandler = () =>{
-    //needles
-    let min = document.querySelector(".min");
-    min.style.backgroundColor = (!clockState.dark ? "white" : "black");
-    let hour = document.querySelector(".hour");
-    hour.style.backgroundColor = (!clockState.dark ? "white" : "black");
-    //theme-clock
-    let clock = document.querySelector(".theme-clock");
-    clock.style.borderColor = (!clockState.dark ? "white" : "black");
-    //backgruond change to dark
-    let app = document.querySelector(".theme");
-    app.style.backgroundColor = (!clockState.dark ? "black" : "white");
-
-    let infos = document.querySelectorAll(".today");
-    infos.forEach(info => {
-      info.style.color = (!clockState.dark ? "white" : "black");
-    })
-    //changing button color
-    const mode = document.querySelector('.mode');
-    mode.style.backgroundColor = (!clockState.dark ? "white" : "black");
-    mode.style.color = (!clockState.dark ? "black" : "white");
-    //time effects
-    app.style.transition = "2s";
-    //update state
-    let newClockState = {...clockState, dark:!clockState.dark}
-    setClockState(newClockState);
+      secondsNeedle: {
+        transform:
+          'rotate(' + ((clockTime.getSeconds() * 360) / 60 - 90) + 'deg)',
+      },
+    },
   }
 
-  //object that will recieve our time
-  //let clockState = null;
-
-//clock fuunction management  
-  let TimeHandler = () => {
-    myTime = new Date();
-    let newClockState = {
-      ...clockState, 
-      date: {
-        month:months[myTime.getMonth()],
-        date:myTime.getDate(),
-        day:days[myTime.getDay()],
-      },
-      time: {
-        hours:myTime.getHours(),
-        minutes:(myTime.getMinutes() < 10 ? '0'+myTime.getMinutes(): myTime.getMinutes()),
-        seconds:(myTime.getSeconds() < 10 ? '0'+myTime.getSeconds(): myTime.getSeconds()),
-        ampm:(myTime.getHours() >= 12 ? 'PM' : 'AM')
-      },
-      clockStyle:setAngles(myTime)
-    }
-    setClockState(newClockState);
-  }
-
-  let setAngles = (myTime) =>{
-    //find the angle for a given hour
-    return ({
-      h_style:{
-        transform:"rotate("+((myTime.getHours() % 12)*360/12 - 85)+"deg)"
-      },
-      m_style:{
-        transform:"rotate("+(myTime.getMinutes()*360/60 -90)+"deg)"
-      },
-      s_style:{
-        transform:"rotate("+(myTime.getSeconds()*360/60 -90)+"deg)"
-      }
-    });
-  }
-  
   setInterval(() => {
-    TimeHandler()
-  }, 1000);
+    setClockTime(new Date())
+  }, 1000)
 
   return (
-    <div className="App" onTimeUpdateCapture>
-      <div className="theme">
-      <button className="mode" onClick={changeModeHandler}>Dark Mode</button>
-        <Horloge 
-          sStyle={clockState.clockStyle.s_style} 
-          mStyle={clockState.clockStyle.m_style} 
-          hStyle={clockState.clockStyle.h_style}
-        />
-        <div  className="timeSet">
-          <p className="today">
-            {clockState.time.hours}: {clockState.time.minutes}:{clockState.time.seconds} {clockState.time.ampm}
+    <div className='App' onTimeUpdateCapture>
+      <div
+        className='theme'
+        style={{ backgroundColor: isDarkMode ? 'white' : 'black' }}
+      >
+        <button
+          className='mode'
+          style={{
+            color: isDarkMode ? 'white' : 'black',
+            backgroundColor: isDarkMode ? 'black' : 'white',
+          }}
+          onClick={() => setIsDarkMode(!isDarkMode)}
+        >
+          {isDarkMode ? 'Light' : 'Dark'} Mode
+        </button>
+        <Horloge isDarkMode={isDarkMode} clockStyle={clockState.clockStyle} />
+        <div className='timeSet'>
+          <p
+            className='today'
+            style={{ color: isDarkMode ? 'black' : 'white', transition: '2s' }}
+          >
+            {clockState.time.hours}: {clockState.time.minutes}:
+            {clockState.time.seconds} {clockState.time.ampm}
           </p>
-          <p className="today">
-            {clockState.date.day}, {clockState.date.month} <span className="circle">{clockState.date.date}</span>
+          <p
+            className='today'
+            style={{ color: isDarkMode ? 'black' : 'white', transition: '2s' }}
+          >
+            {clockState.date.day}, {clockState.date.month}{' '}
+            <span className='circle'>{clockState.date.date}</span>
           </p>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
