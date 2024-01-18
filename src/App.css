@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.theme-clock {
+#theme-clock {
   pointer-events: none;
   padding-left: 10%;
   border: 2px solid black;

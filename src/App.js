@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { Clock } from './Clock'
 
 const WEEKDAYS = [
   'Sunday',
@@ -24,32 +25,6 @@ const MONTHS = [
   'November',
   'December',
 ]
-function Horloge({ isDarkMode, clockStyle }) {
-  return (
-    <div
-      className='theme-clock'
-      style={{ borderColor: isDarkMode ? 'black' : 'white' }}
-    >
-      <div className='needle sec' style={clockStyle.secondsNeedle}></div>
-      <div
-        className='needle min'
-        style={{
-          ...clockStyle.minutesNeedle,
-          backgroundColor: isDarkMode ? 'black' : 'white',
-        }}
-      ></div>
-      <div
-        className='needle hour'
-        style={{
-          ...clockStyle.hoursNeedle,
-          backgroundColor: isDarkMode ? 'black' : 'white',
-        }}
-      ></div>
-      <div className='needle_holder'></div>
-    </div>
-  )
-}
-
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [clockTime, setClockTime] = useState(new Date())
@@ -95,7 +70,7 @@ function App() {
   }, 1000)
 
   return (
-    <div className='App' onTimeUpdateCapture>
+    <div className='App'>
       <div
         className='theme'
         style={{ backgroundColor: isDarkMode ? 'white' : 'black' }}
@@ -110,7 +85,7 @@ function App() {
         >
           {isDarkMode ? 'Light' : 'Dark'} Mode
         </button>
-        <Horloge isDarkMode={isDarkMode} clockStyle={clockState.clockStyle} />
+        <Clock isDarkMode={isDarkMode} clockStyle={clockState.clockStyle} />
         <div className='timeSet'>
           <p
             className='today'
