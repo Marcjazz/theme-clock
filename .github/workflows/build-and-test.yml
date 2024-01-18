@@ -2,7 +2,7 @@ name: Test App
 on:
   push:
     branches:
-      - */
+      - '**'
   pull_request:
     branches:
       - master
