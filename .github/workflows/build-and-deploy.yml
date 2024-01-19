@@ -43,6 +43,3 @@ jobs:
       - name: Deploy to Github Pages 🚀
         id: deployment
         uses: actions/deploy-pages@v4
-        # uses: JamesIves/github-pages-deploy-action@v4
-        # with:
-        #   folder: build # The folder the action should deploy.
