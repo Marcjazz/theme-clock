@@ -22,7 +22,10 @@ jobs:
           npm run build
       - name: Test 🧪
         run: npm run test
-
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with: 
+          path: ./build
   deploy:
     environment:
       name: github-pages
