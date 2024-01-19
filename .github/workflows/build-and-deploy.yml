@@ -5,6 +5,7 @@ on:
       - master
 permissions:
   pages: write
+  id-token: write
 jobs:
   build:
     # Recommended if you intend to make multiple deployments in quick succession.
