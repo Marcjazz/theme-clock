@@ -1,53 +1,38 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 permissions:
-  contents: read
   pages: write
   id-token: write
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 jobs:
   build:
+    # Recommended if you intend to make multiple deployments in quick succession.
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout 🛎️
         uses: actions/checkout@v4
-      - name: Detect package manager
-        id: detect-package-manager
+        # This example project is built using npm and outputs the result to the 'build' folder.
+        # Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+
+      - name: Install and Build 🔧
         run: |
-          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ github.workspace }}/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
-            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "Unable to determine package manager"
-            exit 1
-          fi
-      # - name: Setup Node
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: "14"
-      #     cache: ${{ steps.detect-package-manager.outputs.manager }}
-      - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Build project
-        run: ${{ steps.detect-package-manager.outputs.runner }} npm run build
+          npm ci
+          npm run build
+
+      - name: Test 🧪
+        run: npm run test
+
+      - name: Setup Pages 📄🔧
+        id: pages
+        uses: actions/configure-pages@v4
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./build
-  # Deployment job
   deploy:
     environment:
       name: github-pages
@@ -55,6 +40,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy to Github Pages 🚀
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
+        # uses: JamesIves/github-pages-deploy-action@v4
+        # with:
+        #   folder: build # The folder the action should deploy.
