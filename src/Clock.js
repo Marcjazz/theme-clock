@@ -20,6 +20,7 @@ export function Clock({ isDarkMode, clockStyle }) {
         }}
       ></div>
       <div className='needle_holder'></div>
+      <div style={{ position: "relative", fontSize: 10, color: 'gray', top: '85%' }}> ©️ Marcjazz, KD-MARK 2024</div>
     </div>
   );
 }
