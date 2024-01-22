@@ -4,6 +4,10 @@ on:
     branches:
       - master
   workflow_dispatch:
+permissions:
+  pages: write
+  checks: write
+  id-token: write
 jobs:
   build:
     # Recommended if you intend to make multiple deployments in quick succession.
