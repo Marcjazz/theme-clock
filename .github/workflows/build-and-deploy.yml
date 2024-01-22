@@ -4,6 +4,8 @@ on:
     branches:
       - master
   workflow_dispatch:
+permissions: 
+  id-token: write
 jobs:
   build:
     # Recommended if you intend to make multiple deployments in quick succession.
@@ -39,5 +41,3 @@ jobs:
       - name: Deploy to Github Pages 🚀
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
