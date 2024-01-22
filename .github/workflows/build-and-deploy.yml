@@ -6,6 +6,8 @@ on:
   workflow_dispatch:
 permissions: 
   id-token: write
+  pages: write
+  contents: write
 jobs:
   build:
     # Recommended if you intend to make multiple deployments in quick succession.
